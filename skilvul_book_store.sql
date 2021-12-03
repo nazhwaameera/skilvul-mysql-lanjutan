@@ -74,29 +74,30 @@ VALUES
 
 -- Join --
 -- 1 INNER JOIN --
-SELECT B.buku, B.id, B.penerbit, P.nama 
+SELECT B.judul, B.id, B.penerbit, P.nama 
 FROM buku B 
 INNER JOIN penerbit P ON B.penerbit = P.id;
 
 -- 2 LEFT JOIN --
-SELECT B.buku, B.id, B.penerbit, P.nama 
+SELECT B.judul, B.id, B.penerbit, P.nama 
 FROM buku B 
 LEFT JOIN penerbit P ON B.penerbit = P.id;
 
 -- 3 RIGHT JOIN --
-SELECT B.buku, B.id, B.penerbit, P.nama 
+SELECT B.judul, B.id, B.penerbit, P.nama 
 FROM buku B 
 RIGHT JOIN penerbit P ON B.penerbit = P.id;
 
 -- Query --
 --4 MAX harga buku stok di bawah 10
-SELECT judul, penerbit, id_penulis, MAX(harga), stock
+SELECT judul, penerbit, id_penulis, harga, stock
 FROM buku
-WHERE stock < 10;
+WHERE harga = (SELECT MAX(harga) FROM buku WHERE stock < 10);
 
 --5 MIN harga
-SELECT judul, penerbit, id_penulis, MIN(harga), stock
-FROM buku;
+SELECT judul, penerbit, id_penulis, harga, stock
+FROM buku
+WHERE harga = (SELECT MIN(harga) FROM buku WHERE stock < 10);
 
 --6 COUNT buku di bawah 100k
 SELECT COUNT(*)
